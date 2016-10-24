@@ -79,9 +79,10 @@ switch ($parameterSetName)
         }
         Write-Debug "repositoryZipUrl=$repositoryZipUrl"
         Write-Debug "downloadFileName=$downloadFileName"
-        $downloadRepositoryActivity="Get Github repository $Repository from $User"
+        
+        $getRepositoryActivity="Get Github repository $Repository from $User"
         # Download release artifact to temp folder
-        Write-Progress -Activity $downloadRepositoryActivity -Status "Downloading $downloadFileName"
+        Write-Progress -Activity $getRepositoryActivity -Status "Downloading $downloadFileName"
         $tempPath=Join-Path $env:TEMP $downloadFileName
         Write-Debug "tempPath=$tempPath"
         if(Test-Path $tempPath)
@@ -97,52 +98,19 @@ switch ($parameterSetName)
 
         if($Expand)
         {
-            Write-Progress -Activity $downloadRepositoryActivity -Status "Expanding $downloadFileName"
+            Write-Progress -Activity $getRepositoryActivity -Status "Expanding $downloadFileName"
             $expandPath=Join-Path $env:TEMP $Repository
             Write-Debug "expandPath=$expandPath"
             # Remove the directory if it exists
             if(Test-Path $expandPath)
             {
-                Write-Warning "$expandPath already exists. Removing"
-                Get-ChildItem -Path $expandPath -Recurse -File| ForEach-Object { 
-                    $_.IsReadOnly=$false 
-                }
-                $item=Get-Item $expandPath
-                $item=IsReadOnly=$false
-                Start-Sleep -Milliseconds 500
-                Remove-Item -Path "$expandPath\*" -Recurse -Force
-                Remove-Item -Path "$expandPath"  -Force
+                Remove-Item -Path "$expandPath" -Recurse -Force
                 Write-Verbose "Removed $expandPath with recurse"
             }
-#            Start-Sleep -Milliseconds 500
-<#
-            while(Test-Path $expandPath -PathType Container -ErrorAction SilentlyContinue)
-            {
-                # sleep to make sure the file is available
-                $milliseconds=100
-                Write-Debug "Sleeping $milliseconds ms"
-                Start-Sleep -Milliseconds 500
-                Write-Verbose "Slept $milliseconds ms"
-            }
-#>
-#            New-Item $expandPath -ItemType Directory |Out-Null
             Write-Verbose "$expandPath is ready"
-<#            
-            while(-not(Test-Path $tempPath -PathType Leaf -ErrorAction SilentlyContinue))
-            {
-                # sleep to make sure the file is available
-                $milliseconds=100
-                Write-Debug "Sleeping $milliseconds ms"
-                Start-Sleep -Milliseconds 500
-                Write-Verbose "Slept $milliseconds ms"
-            }
-#>            
+
             Write-Debug "Expanding $tempPath to $expandPath"
-<# Powershell v4 version
-            [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')|Out-Null
-            [System.IO.Compression.ZipFile]::ExtractToDirectory($tempPath, $expandPath)|Out-Null
-#>            
-            Expand-Archive -Path $tempPath -DestinationPath $expandPath -Force
+            Expand-Archive -Path $tempPath -DestinationPath $expandPath -Force -ErrorAction SilentlyContinue
             Write-Verbose "Expanded $tempPath to $expandPath"
             
             
