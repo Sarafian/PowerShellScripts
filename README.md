@@ -5,7 +5,7 @@ This is a repository for PowerShell scripts published in the [PowerShell gallery
 | Branch | Status |
 | ------ | ------ |
 | **master** | Not availabe yet |
-| **develop** | ![developstatus](https://asarafian.visualstudio.com/DefaultCollection/_apis/public/build/definitions/9411077a-da68-4370-9d62-7fa8ec77dfa9/8/badge) |
+| **develop** | ![developstatus](https://asarafian.visualstudio.com/_apis/public/build/definitions/c74695ef-1468-4736-b58c-90980cb734e1/21/badge) |
 
 The repository is devided among different sections
 
