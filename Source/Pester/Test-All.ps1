@@ -26,7 +26,7 @@ if($outputFile)
 }
 
 $pesterResult=Invoke-Pester @pesterHash
-
+$pesterResult | Add-Member -Name "TestResultPath" -Value $outputFile -MemberType NoteProperty
 if($pesterResult.FailedCount -gt 0)
 {
     $failedCount+=$pesterResult.FailedCount

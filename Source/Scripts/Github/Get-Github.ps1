@@ -94,6 +94,11 @@ switch ($parameterSetName)
         Write-Debug "Downloading $repositoryZipUrl to $tempPath"
         Invoke-WebRequest -Uri $repositoryZipUrl -UseBasicParsing -OutFile $tempPath
         Write-Verbose "Downloaded $repositoryZipUrl to $tempPath"
+        # sleep to make sure the file is available
+        $milliseconds=500
+        Write-Debug "Sleeping $milliseconds ms"
+        Start-Sleep -Milliseconds 500
+        Write-Verbose "Slept $milliseconds ms"
 
         if($Expand)
         {
