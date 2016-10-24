@@ -3,7 +3,7 @@
 Param (
     [Parameter(Mandatory = $false)]
     [ValidateSet("None","Temp","ScriptRoot")]
-    [string]$OutputFolderPath="None"
+    [string]$OutputPath="None"
 )
 $failedCount=0
 $pesterHash=@{
@@ -12,17 +12,17 @@ $pesterHash=@{
 }
 
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".").Replace(".ps1", "")
-switch ($OutputFolderPath)
+switch ($OutputPath)
 {
-    'None' {$outputPath=$null}
-    'ScriptRoot' {$outputPath="$PSScriptRoot\$sut.xml"}
-    'Temp' {$outputPath="$env:TEMP\$sut.xml"}
+    'None' {$outputFile=$null}
+    'ScriptRoot' {$outputFile="$PSScriptRoot\$sut.xml"}
+    'Temp' {$outputFile="$env:TEMP\$sut.xml"}
 }
 
-if($OutputPath)
+if($outputFile)
 {
     $pesterHash.OutputFormat="NUnitXml"
-    $pesterHash.OutputPath=$outputPath
+    $pesterHash.OutputFile=$outputFile
 }
 
 $pesterResult=Invoke-Pester @pesterHash
