@@ -62,11 +62,11 @@ $sourceScripts |ForEach-Object {
         Write-Progress -Activity $progressActivity -Status "Publishing..."
         if($NuGetApiKey)
         {
-            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey $NuGetApiKey
+            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey $NuGetApiKey -Confirm:$false
         }
         else
         {
-            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey "MockKey"
+            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey "MockKey" -WhatIf -Confirm:$false
         }
         Write-Verbose "Published $($sourceScript.FullName)"
     }
