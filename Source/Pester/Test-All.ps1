@@ -5,6 +5,16 @@ Param (
     [ValidateSet("None","Temp","ScriptRoot")]
     [string]$OutputPath="None"
 )
+
+$visualStudioServicesScriptsPath="$PSScriptRoot\..\..\Automation\VisualStudioTeamServices"
+$isVSTSHostedAgent=& $visualStudioServicesScriptsPath\Test-VisualStudioTeamServicesBuildHostedAgent.ps1
+if($isVSTSHostedAgent)
+{
+    & $visualStudioServicesScriptsPath\Initialize-NuGetPackageProvider.ps1 -Install -Import
+    & $visualStudioServicesScriptsPath\Install-Module.ps1 -Name Pester
+}
+
+
 $failedCount=0
 $pesterHash=@{
     Script="$PSScriptRoot"
