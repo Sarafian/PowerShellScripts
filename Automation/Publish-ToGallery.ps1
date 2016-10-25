@@ -66,7 +66,7 @@ $sourceScripts |ForEach-Object {
         }
         else
         {
-            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey "MockKey" -WhatIf
+            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey "MockKey"
         }
         Write-Verbose "Published $($sourceScript.FullName)"
     }

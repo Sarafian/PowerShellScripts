@@ -32,4 +32,4 @@ if($pesterResult.FailedCount -gt 0)
     $failedCount+=$pesterResult.FailedCount
 }
 
-return $failedCount
+exit $failedCount
