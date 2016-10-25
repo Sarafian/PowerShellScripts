@@ -11,7 +11,7 @@ $expectedMasterZipPath=Join-Path $env:TEMP "$repository-master.zip"
 $expectedMasterPath=Join-Path $env:TEMP "$repository\$repository-master"
 $expectedDevelopZipPath=Join-Path $env:TEMP "$repository-$developBranch.zip"
 $expectedDevelopPath=Join-Path $env:TEMP "$repository\$repository-$developBranch"
-$expectedTagZipPath=Join-Path $env:TEMP "$repository1-$tag.zip"
+$expectedTagZipPath=Join-Path $env:TEMP "$repository-$tag.zip"
 $expectedTagPath=Join-Path $env:TEMP "$repository\$repository-$release"
 
 Describe "Get-Github.ps1" {
