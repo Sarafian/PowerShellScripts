@@ -2,7 +2,7 @@
 
 <#PSScriptInfo
 
-.VERSION 0.1
+.VERSION 0.2
 
 .GUID 2d4a2e50-1ae2-4030-8f78-ac0c3d041e72
 
@@ -39,18 +39,18 @@
 #> 
 Param(
     [Parameter(Mandatory=$true,ParameterSetName="Repository Branch")]
-    #[Parameter(Mandatory=$true,ParameterSetName="Repository Tag")]
+    [Parameter(Mandatory=$true,ParameterSetName="Repository Tag")]
 #    [Parameter(Mandatory=$true,ParameterSetName="Gist")]
     [string]$User,
     [Parameter(Mandatory=$true,ParameterSetName="Repository Branch")]
-#    [Parameter(Mandatory=$true,ParameterSetName="Repository Tag")]
+    [Parameter(Mandatory=$true,ParameterSetName="Repository Tag")]
     [string]$Repository,
     [Parameter(Mandatory=$false,ParameterSetName="Repository Branch")]
     [string]$Branch="master",
-#    [Parameter(Mandatory=$true,ParameterSetName="Repository Tag")]
-#    [string]$Tag,
+    [Parameter(Mandatory=$true,ParameterSetName="Repository Tag")]
+    [string]$Tag,
     [Parameter(Mandatory=$false,ParameterSetName="Repository Branch")]
-#    [Parameter(Mandatory=$false,ParameterSetName="Repository Tag")]
+    [Parameter(Mandatory=$false,ParameterSetName="Repository Tag")]
     [switch]$Expand=$false
 #    [Parameter(Mandatory=$true,ParameterSetName="Gist")]
 #    [string]$ID,
@@ -66,12 +66,10 @@ switch ($parameterSetName)
         $repositoryZipUrl="https://github.com/$User/$Repository/archive/"
         switch ($parameterSetName)
         {
-            <#
             {$_ -like '*Tag'} {
                 $repositoryZipUrl+="$Tag.zip"
                 $downloadFileName="$Repository-$Tag.zip"
             }
-            #>
             {$_ -like '*Branch'} {
                 $repositoryZipUrl+="$Branch.zip"
                 $downloadFileName="$Repository-$Branch.zip"
