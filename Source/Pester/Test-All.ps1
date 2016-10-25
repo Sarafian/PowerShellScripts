@@ -32,4 +32,8 @@ if($pesterResult.FailedCount -gt 0)
     $failedCount+=$pesterResult.FailedCount
 }
 
-exit $failedCount
+if($failedCount -gt 0)
+{
+    throw "Test errors $failedCount detected"
+}
+return $failedCount
