@@ -2,14 +2,12 @@
     [Parameter(Mandatory=$false)]
     [string]$NuGetApiKey=$null
 )
-<#
 $visualStudioServicesScriptsPath="$PSScriptRoot\VisualStudioTeamServices"
 $isVSTSHostedAgent=& "$visualStudioServicesScriptsPath\Test-VisualStudioTeamServicesBuildHostedAgent.ps1"
 if($isVSTSHostedAgent)
 {
     & "$visualStudioServicesScriptsPath\Initialize-NuGetPackageProvider.ps1" -Import
 }
-#>
 
 $tempWorkFolderPath=Join-Path $env:TEMP "PowerShellScripts-Publish"
 if(Test-Path $tempWorkFolderPath)
