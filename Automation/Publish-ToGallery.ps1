@@ -2,6 +2,8 @@
     [Parameter(Mandatory=$false)]
     [string]$NuGetApiKey=$null
 )
+$visualStudioServicesScriptsPath="$PSScriptRoot\VisualStudioTeamServices"
+$isVSTSHostedAgent=& "$visualStudioServicesScriptsPath\Test-VisualStudioTeamServicesBuildHostedAgent.ps1"
 
 $tempWorkFolderPath=Join-Path $env:TEMP "PowerShellScripts-Publish"
 if(Test-Path $tempWorkFolderPath)
@@ -67,7 +69,19 @@ $sourceScripts |ForEach-Object {
         }
         else
         {
-            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey "MockKey" -WhatIf -Force
+            $mockKey="MockKey"
+            if($isVSTSHostedAgent)
+            {
+                # When VSTS hosted agent is detected, the -Force is required. But it overrides the -WhatIf. 
+                # This is only to check if it is possible to publish.
+                Write-Warning "VSTS detected. Simulating publishing with -Force parameter."
+                Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey $mockKey -WhatIf -Force -ErrorAction SilentlyContinue
+                Write-Warning "Publish script is expected to have failed because of the $mockKey key."
+            }
+            else
+            {
+                Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey $mockKey -WhatIf
+            }
         }
         Write-Verbose "Published $($sourceScript.FullName)"
     }
