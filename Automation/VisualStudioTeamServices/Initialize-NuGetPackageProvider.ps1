@@ -7,11 +7,11 @@ param(
 $nugetProviderName="NuGet"
 if($Install)
 {
-    Write-Information "Forcing update of $nugetProviderName package provider"
+    Write-Host "Forcing update of $nugetProviderName package provider"
     Install-PackageProvider -Name $nugetProviderName -Force -Scope CurrentUser
 }
 if($Install)
 {
-    Write-Information "Forcing import of $nugetProviderName package provider"
+    Write-Host "Forcing import of $nugetProviderName package provider"
     Import-PackageProvider -Name $nugetProviderName
 }

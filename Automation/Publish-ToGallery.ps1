@@ -6,7 +6,9 @@ $visualStudioServicesScriptsPath="$PSScriptRoot\VisualStudioTeamServices"
 $isVSTSHostedAgent=& "$visualStudioServicesScriptsPath\Test-VisualStudioTeamServicesBuildHostedAgent.ps1"
 if($isVSTSHostedAgent)
 {
-    & "$visualStudioServicesScriptsPath\Initialize-NuGetPackageProvider.ps1" -Import
+    $nugetProviderName="NuGet"
+    Write-Host "Forcing import of $nugetProviderName package provider"
+    Import-PackageProvider -Name $nugetProviderName
 }
 
 $tempWorkFolderPath=Join-Path $env:TEMP "PowerShellScripts-Publish"
