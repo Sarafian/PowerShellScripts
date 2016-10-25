@@ -37,16 +37,17 @@ $sourceScripts |ForEach-Object {
         $sourceMajor=[int]$Matches["Major"]
         $sourceMinor=[int]$Matches["Minor"]
 
-        Write-Verbose "Source version is $sourceMajor.$sourceMinor"
+        Write-Debug "sourceMajor=$sourceMajor"
+        Write-Debug "sourceMinor=$sourceMinor"
 
         if(($sourceMajor -ne $publishedMajor) -or ($sourceMinor -ne $publishedMinor))
         {
-            Write-Verbose "Source version $sourceVersion is different that published version $publishedVersion"
+            Write-Verbose "Source version $sourceMajor.$sourceMinor is different that published version $publishedVersion"
             $shouldTryPublish=$true
         }
         else
         {
-            Write-Verbose "Source version $sourceVersion is the same. Will skip publishing"
+            Write-Verbose "Source version $sourceMajor.$sourceMinor is the same. Will skip publishing"
         }
     }
     else
