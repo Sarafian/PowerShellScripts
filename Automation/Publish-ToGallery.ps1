@@ -2,14 +2,6 @@
     [Parameter(Mandatory=$false)]
     [string]$NuGetApiKey=$null
 )
-$visualStudioServicesScriptsPath="$PSScriptRoot\VisualStudioTeamServices"
-$isVSTSHostedAgent=& "$visualStudioServicesScriptsPath\Test-VisualStudioTeamServicesBuildHostedAgent.ps1"
-if($isVSTSHostedAgent)
-{
-    $nugetProviderName="NuGet"
-    Write-Host "Forcing import of $nugetProviderName package provider"
-    Import-PackageProvider -Name $nugetProviderName
-}
 
 $tempWorkFolderPath=Join-Path $env:TEMP "PowerShellScripts-Publish"
 if(Test-Path $tempWorkFolderPath)
@@ -71,11 +63,11 @@ $sourceScripts |ForEach-Object {
         Write-Progress -Activity $progressActivity -Status "Publishing..."
         if($NuGetApiKey)
         {
-            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey $NuGetApiKey -Confirm:$false
+            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey $NuGetApiKey -Force
         }
         else
         {
-            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey "MockKey" -WhatIf -Confirm:$false
+            Publish-Script -Repository PSGallery -Path $sourceScript.FullName -NuGetApiKey "MockKey" -WhatIf -Force
         }
         Write-Verbose "Published $($sourceScript.FullName)"
     }
