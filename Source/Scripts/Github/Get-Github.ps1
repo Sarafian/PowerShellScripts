@@ -2,7 +2,7 @@
 
 <#PSScriptInfo
 
-.VERSION 0.3
+.VERSION 0.4
 
 .GUID 2d4a2e50-1ae2-4030-8f78-ac0c3d041e72
 
@@ -108,7 +108,7 @@ switch ($parameterSetName)
             Write-Verbose "$expandPath is ready"
 
             Write-Debug "Expanding $tempPath to $expandPath"
-            if(Get-Command Expand-Archive)
+            if(Get-Command Expand-Archive -ErrorAction SilentlyContinue)
             {
                 Expand-Archive -Path $tempPath -DestinationPath $expandPath -Force -ErrorAction SilentlyContinue
             }
