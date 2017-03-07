@@ -1,8 +1,8 @@
-#Requires –Version 5
+#requires -Version 4.0
 
 <#PSScriptInfo
 
-.VERSION 0.2
+.VERSION 0.3
 
 .GUID 2d4a2e50-1ae2-4030-8f78-ac0c3d041e72
 
@@ -108,9 +108,16 @@ switch ($parameterSetName)
             Write-Verbose "$expandPath is ready"
 
             Write-Debug "Expanding $tempPath to $expandPath"
-            Expand-Archive -Path $tempPath -DestinationPath $expandPath -Force -ErrorAction SilentlyContinue
-            Write-Verbose "Expanded $tempPath to $expandPath"
-            
+            if(Get-Command Expand-Archive)
+            {
+                Expand-Archive -Path $tempPath -DestinationPath $expandPath -Force -ErrorAction SilentlyContinue
+            }
+            else
+            {
+                [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')|Out-Null
+                [System.IO.Compression.ZipFile]::ExtractToDirectory($tempPath, $expandPath)|Out-Null
+            }
+            Write-Verbose "Expanded $tempPath to $expandPath"            
             
             Write-Debug "Removing $tempPath"
             Remove-Item -Path $tempPath -Recurse -Force
