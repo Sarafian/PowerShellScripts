@@ -1,3 +1,7 @@
+**20170830** 
+
+- [Resolve-CloudFormationTemplate.ps1](Source\Scripts\AWS\Resolve-CloudFormationTemplate.ps1). **[New]**
+
 **20170317** 
 
 - [Copy-Module.ps1](Source\Scripts\PSRepository\Copy-Module.ps1). **[New]**
