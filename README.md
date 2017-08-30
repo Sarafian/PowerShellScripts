@@ -46,6 +46,41 @@ $moduleName="MarkdownPS"
 # Copy the latest version from a repository
 .\Copy-Module.ps1 -ModuleName $moduleName -ToRepository "to" -APIKey "apikey" -FromRepository "from"
 ```
+# Amazon Web Services
+
+[Resolve-CloudFormationTemplate.ps1](Source\Scripts\AWS\Resolve-CloudFormationTemplate.ps1) runs a local simulation of an AWS CloudFormation template file.
+
+The script requires the following installed
+
+- [Node](https://nodejs.org/)
+- [aws-cfn-template-flip](https://github.com/awslabs/aws-cfn-template-flip)
+
+The simulation is run by [Dome9's cft-simulator](https://github.com/Dome9/cft-simulator). As the simulator has not official releases, the script will download the master branch on every day and then run `npm install`. During the same day, the cached version will be used.
+
+Because [Dome9's cft-simulator](https://github.com/Dome9/cft-simulator) supports only **JSON** type CloudFormation templates, the script will internally *flip* from one format to another when the template is in **YAML** format.
+
+**Example for JSON**
+
+```powershell
+
+$splat=@{
+    CFTPath="cft.json"
+    CFTParameters='{"env":"prod","a":123}'
+    CFTResolvedPath="cft.resolved.json"
+}
+Resolve-CloudFormationTemplate @splat -JSON
+```
+
+**Example for YAML**
+```powershell
+
+$splat=@{
+    CFTPath="cft.yaml"
+    CFTParameters='{"env":"prod","a":123}'
+    CFTResolvedPath="cft.resolved.yaml"
+}
+Resolve-CloudFormationTemplate @splat -YAML
+```
 
 ## What is new?
 
